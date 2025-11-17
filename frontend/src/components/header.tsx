@@ -25,7 +25,7 @@ export function Header() {
       top={0}
       zIndex="docked"
     >
-      {/* Server name and Logo */}
+      {/* Server name, Logo and Navigation */}
       <HStack gap="2rem">
         <Text asChild fontSize="lg" fontWeight={600}>
           <Link to="/">
@@ -35,6 +35,14 @@ export function Header() {
             </Flex>
           </Link>
         </Text>
+        <HStack gap="2rem">
+          <Text asChild fontSize="md">
+            <Link to="/products">Produtos</Link>
+          </Text>
+          <Text asChild fontSize="md">
+            <Link to="/reports">Relatórios</Link>
+          </Text>
+        </HStack>
       </HStack>
 
       {/* User Avatar + Auth logics */}
