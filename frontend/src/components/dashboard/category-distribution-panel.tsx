@@ -19,7 +19,7 @@ export function CategoryDistributionPanel({
     .sort((a, b) => b.value - a.value)
 
   return (
-    <Box bg="bg.panel" borderRadius="lg" borderWidth="1px" p={6}>
+    <Box maxH="lg" bg="bg.panel" borderRadius="lg" borderWidth="1px" p={6}>
       <Heading size="md">Distribuicao por categoria</Heading>
       <Text color="fg.muted" mt={2}>
         Quantidade total de itens em cada categoria

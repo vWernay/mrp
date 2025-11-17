@@ -20,13 +20,13 @@ export function LowStockPanel({ items }: LowStockPanelProps) {
   const lowStockProducts = items.filter((item) => item.lowStock)
 
   return (
-    <Box bg="bg.panel" borderRadius="lg" borderWidth="1px" p={6}>
+    <Box maxH="lg" bg="bg.panel" borderRadius="lg" borderWidth="1px" p={6}>
       <Heading size="md">Estoque baixo</Heading>
       <Text color="fg.muted" mt={2}>
         Produtos com quantidade menor que {LOW_STOCK_THRESHOLD} irão aparecer
         aqui.
       </Text>
-      <Stack gap={3} mt={6}>
+      <Stack gap={3} mt={6} overflowY="auto" maxH="xs">
         {lowStockProducts.length === 0 ? (
           <Flex align="center" h="full" justify="center" py={10} w="full">
             <EmptyState.Root>
@@ -73,7 +73,7 @@ export function LowStockPanel({ items }: LowStockPanelProps) {
                 px={3}
                 py={1}
               >
-                Qtd: {product.quantity.toLocaleString("pt-BR")}
+                Qtd: {product.quantity.toLocaleString("pt-BR")} {product.unit}
               </Box>
             </Flex>
           ))
