@@ -1,4 +1,3 @@
-import { ArrowLeft, Trash2 } from "lucide-react"
 import {
   Box,
   Button,
@@ -8,6 +7,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
+import { ArrowLeft, Trash2 } from "lucide-react"
 import InfoBlock from "@/components/info-block"
 import type { Item } from "@/lib/api"
 
@@ -34,21 +34,26 @@ export function ProductDetailContent({
   const totalValue = product.unitPrice * product.quantity
 
   return (
-    <Container maxW="4xl" py={10} px={{ base: 4, md: 6 }}>
+    <Container maxW="4xl" px={{ base: 4, md: 6 }} py={10}>
       <Stack gap={8}>
         <Button
-          variant="ghost"
           alignSelf="flex-start"
           display="inline-flex"
           gap={2}
           onClick={onBack}
+          variant="ghost"
         >
           <ArrowLeft size={18} />
           Voltar
         </Button>
 
         <Stack gap={3}>
-          <Text fontSize="xs" fontWeight="semibold" textTransform="uppercase" color="fg.muted">
+          <Text
+            color="fg.muted"
+            fontSize="xs"
+            fontWeight="semibold"
+            textTransform="uppercase"
+          >
             Produto #{product.id}
           </Text>
           <Text as="h1" fontSize="2xl" fontWeight="bold">
@@ -57,47 +62,62 @@ export function ProductDetailContent({
           <Text color="fg.muted">Categoria: {product.category}</Text>
         </Stack>
 
-        <Box borderWidth="1px" borderRadius="lg" bg="bg.surface" p={{ base: 6, md: 8 }}>
+        <Box
+          bg="bg.surface"
+          borderRadius="lg"
+          borderWidth="1px"
+          p={{ base: 6, md: 8 }}
+        >
           <SimpleGrid columns={{ base: 1, md: 2 }} gap={5}>
-            <InfoBlock label="Preço de venda" value={currencyFormatter.format(product.unitPrice)} />
             <InfoBlock
-              label="Quantidade em estoque"
-              value={`${product.quantity.toLocaleString("pt-BR")} ${product.unit}`}
+              label="Preço de venda"
+              value={currencyFormatter.format(product.unitPrice)}
+            />
+            <InfoBlock
               extra={
                 product.lowStock ? (
                   <Box
-                    mt={2}
                     as="span"
-                    display="inline-block"
-                    px={2}
-                    py={1}
+                    bg="orange.500"
                     borderRadius="full"
+                    color="white"
+                    display="inline-block"
                     fontSize="xs"
                     fontWeight="bold"
-                    bg="orange.500"
-                    color="white"
+                    mt={2}
+                    px={2}
+                    py={1}
                   >
                     Baixo estoque
                   </Box>
                 ) : null
               }
+              label="Quantidade em estoque"
+              value={`${product.quantity.toLocaleString("pt-BR")} ${product.unit}`}
             />
-            <InfoBlock label="Valor total estimado" value={currencyFormatter.format(totalValue)} />
+            <InfoBlock
+              label="Valor total estimado"
+              value={currencyFormatter.format(totalValue)}
+            />
             <InfoBlock label="Categoria" value={product.category} />
           </SimpleGrid>
         </Box>
 
-        <Flex direction={{ base: "column", md: "row" }} gap={3} justify="flex-end">
-          <Button variant="outline" onClick={onRequestStockMovement}>
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          gap={3}
+          justify="flex-end"
+        >
+          <Button onClick={onRequestStockMovement} variant="outline">
             Movimentar estoque
           </Button>
           <Button
             colorPalette="red"
             display="inline-flex"
             gap={2}
-            onClick={onDelete}
             loading={isDeleting}
             loadingText="Excluindo..."
+            onClick={onDelete}
           >
             <Trash2 size={18} />
             Excluir produto

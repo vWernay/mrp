@@ -1,9 +1,14 @@
-import { toaster } from "@/components/ui/toaster"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useCanGoBack, useNavigate, useRouter } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  useCanGoBack,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router"
 import { useForm } from "react-hook-form"
 import { ProductCreateContent } from "@/components/products/product-create-content"
 import type { ProductFormValues } from "@/components/products/types"
+import { toaster } from "@/components/ui/toaster"
 import { createItem } from "@/lib/api"
 
 export const Route = createFileRoute("/products/new")({
@@ -48,7 +53,10 @@ function ProductCreateRoute() {
     onError: (error) => {
       toaster.create({
         title: "Não foi possível salvar",
-        description: error instanceof Error ? error.message : "Tente novamente em instantes.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Tente novamente em instantes.",
         type: "error",
         duration: 4000,
         closable: true,
@@ -69,11 +77,11 @@ function ProductCreateRoute() {
   return (
     <ProductCreateContent
       canGoBack={canGoBack}
+      errors={errors}
+      isSubmitting={mutation.isPending}
       onBack={() => router.history.back()}
       onSubmit={onSubmit}
       register={register}
-      errors={errors}
-      isSubmitting={mutation.isPending}
     />
   )
 }

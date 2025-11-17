@@ -1,3 +1,6 @@
+import { Container, SimpleGrid, Stack } from "@chakra-ui/react"
+import { useQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
 import { CategoryDistributionPanel } from "@/components/dashboard/category-distribution-panel"
 import { DashboardError } from "@/components/dashboard/dashboard-error"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
@@ -5,9 +8,6 @@ import { DashboardLoading } from "@/components/dashboard/dashboard-loading"
 import { LowStockPanel } from "@/components/dashboard/low-stock-panel"
 import { MetricsGrid } from "@/components/dashboard/metrics-grid"
 import { getItems } from "@/lib/api"
-import { Container, SimpleGrid, Stack } from "@chakra-ui/react"
-import { useQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/")({
   component: DashboardRoute,
@@ -35,7 +35,7 @@ function DashboardRoute() {
   }
 
   return (
-    <Container maxW="6xl" py={10} px={{ base: 4, md: 6 }}>
+    <Container maxW="6xl" px={{ base: 4, md: 6 }} py={10}>
       <Stack gap={10}>
         <DashboardHeader />
 

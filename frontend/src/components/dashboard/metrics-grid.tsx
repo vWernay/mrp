@@ -1,5 +1,5 @@
-import type { Item } from "@/lib/api"
 import { SimpleGrid } from "@chakra-ui/react"
+import type { Item } from "@/lib/api"
 import { MetricCard } from "./metric-card"
 
 interface MetricsGridProps {

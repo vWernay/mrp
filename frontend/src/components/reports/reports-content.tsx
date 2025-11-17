@@ -1,5 +1,5 @@
-import type { Item } from "@/lib/api"
 import { SimpleGrid } from "@chakra-ui/react"
+import type { Item } from "@/lib/api"
 import { CostByCategoryPanel } from "./cost-by-category-panel"
 import { ProductsByCategoryPanel } from "./products-by-category-panel"
 import { TopProductsPanel } from "./top-products-panel"

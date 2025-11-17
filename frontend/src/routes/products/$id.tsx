@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { toaster } from "@/components/ui/toaster"
-import { deleteItem, getItem } from "@/lib/api"
 import { ProductDetailContent } from "@/components/products/product-detail-content"
 import { ProductDetailError } from "@/components/products/product-detail-error"
 import { ProductDetailInvalid } from "@/components/products/product-detail-invalid"
 import { ProductDetailLoading } from "@/components/products/product-detail-loading"
+import { toaster } from "@/components/ui/toaster"
+import { deleteItem, getItem } from "@/lib/api"
 
 export const Route = createFileRoute("/products/$id")({
   component: ProductDetailRoute,
@@ -48,7 +48,9 @@ function ProductDetailRoute() {
       toaster.create({
         title: "Não foi possível remover",
         description:
-          mutationError instanceof Error ? mutationError.message : "Tente novamente em breve.",
+          mutationError instanceof Error
+            ? mutationError.message
+            : "Tente novamente em breve.",
         type: "error",
         duration: 4000,
         closable: true,
@@ -57,7 +59,11 @@ function ProductDetailRoute() {
   })
 
   if (Number.isNaN(itemId)) {
-    return <ProductDetailInvalid onBackToList={() => navigate({ to: "/products" })} />
+    return (
+      <ProductDetailInvalid
+        onBackToList={() => navigate({ to: "/products" })}
+      />
+    )
   }
 
   if (isPending) {
@@ -68,27 +74,28 @@ function ProductDetailRoute() {
     return (
       <ProductDetailError
         message={error instanceof Error ? error.message : undefined}
-        onRetry={() => refetch()}
         onBackToList={() => navigate({ to: "/products" })}
+        onRetry={() => refetch()}
       />
     )
   }
 
   return (
     <ProductDetailContent
-      product={product}
+      isDeleting={deleteMutation.isPending}
       onBack={() => navigate({ to: "/products" })}
       onDelete={() => deleteMutation.mutate(product.id)}
       onRequestStockMovement={() =>
         toaster.create({
           title: "Recurso em planejamento",
-          description: "Movimentação de estoque será implementada em uma próxima etapa.",
+          description:
+            "Movimentação de estoque será implementada em uma próxima etapa.",
           type: "info",
           duration: 3000,
           closable: true,
         })
       }
-      isDeleting={deleteMutation.isPending}
+      product={product}
     />
   )
 }

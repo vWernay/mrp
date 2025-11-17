@@ -60,7 +60,9 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
         throw new Error(detail)
       }
       if (Array.isArray(detail)) {
-        throw new Error(detail.filter((item) => typeof item === "string").join(", "))
+        throw new Error(
+          detail.filter((item) => typeof item === "string").join(", ")
+        )
       }
     }
     throw new Error(response.statusText || "Erro ao comunicar com o servidor")

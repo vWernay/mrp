@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createFileRoute, useCanGoBack, useNavigate, useRouter } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  useCanGoBack,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router"
 import { useState } from "react"
 import { ProductsError } from "@/components/products/products-error"
 import { ProductsListContent } from "@/components/products/products-list-content"
@@ -51,7 +56,9 @@ function ProductsListRoute() {
       toaster.create({
         title: "Não foi possível remover",
         description:
-          mutationError instanceof Error ? mutationError.message : "Tente novamente em instantes.",
+          mutationError instanceof Error
+            ? mutationError.message
+            : "Tente novamente em instantes.",
         type: "error",
         duration: 4000,
         closable: true,
@@ -67,19 +74,26 @@ function ProductsListRoute() {
   }
 
   if (isError) {
-    return <ProductsError error={error instanceof Error ? error : null} onRetry={refetch} />
+    return (
+      <ProductsError
+        error={error instanceof Error ? error : null}
+        onRetry={refetch}
+      />
+    )
   }
 
   return (
     <ProductsListContent
-      items={items}
       canGoBack={canGoBack}
-      onBack={() => router.history.back()}
-      onCreate={() => navigate({ to: "/products/new" })}
-      onViewDetails={(id) => navigate({ to: "/products/$id", params: { id: id.toString() } })}
-      onDelete={(id) => deleteMutation.mutate(id)}
       deletingId={deletingId}
       isDeleting={deleteMutation.isPending}
+      items={items}
+      onBack={() => router.history.back()}
+      onCreate={() => navigate({ to: "/products/new" })}
+      onDelete={(id) => deleteMutation.mutate(id)}
+      onViewDetails={(id) =>
+        navigate({ to: "/products/$id", params: { id: id.toString() } })
+      }
       pageSize={pageSize}
     />
   )

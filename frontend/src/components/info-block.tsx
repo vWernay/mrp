@@ -10,7 +10,13 @@ type InfoBlockProps = {
 export default function InfoBlock({ label, value, extra }: InfoBlockProps) {
   return (
     <Stack gap={1}>
-      <Text fontSize="sm" textTransform="uppercase" letterSpacing="wide" color="fg.muted" fontWeight="semibold">
+      <Text
+        color="fg.muted"
+        fontSize="sm"
+        fontWeight="semibold"
+        letterSpacing="wide"
+        textTransform="uppercase"
+      >
         {label}
       </Text>
       <Text fontSize="xl" fontWeight="bold">

@@ -1,5 +1,5 @@
-import { ArrowLeft, Plus } from "lucide-react"
 import { Button, Flex, HStack, Stack, Text } from "@chakra-ui/react"
+import { ArrowLeft, Plus } from "lucide-react"
 
 interface ProductsHeaderProps {
   canGoBack: boolean
@@ -7,11 +7,24 @@ interface ProductsHeaderProps {
   onCreate: () => void
 }
 
-export function ProductsHeader({ canGoBack, onBack, onCreate }: ProductsHeaderProps) {
+export function ProductsHeader({
+  canGoBack,
+  onBack,
+  onCreate,
+}: ProductsHeaderProps) {
   return (
-    <Flex direction={{ base: "column", md: "row" }} justify="space-between" gap={4}>
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      gap={4}
+      justify="space-between"
+    >
       <Stack gap={2}>
-        <Text fontSize="xs" fontWeight="semibold" color="fg.muted" textTransform="uppercase">
+        <Text
+          color="fg.muted"
+          fontSize="xs"
+          fontWeight="semibold"
+          textTransform="uppercase"
+        >
           Catálogo
         </Text>
         <Text as="h1" fontSize="2xl" fontWeight="bold">
@@ -22,16 +35,16 @@ export function ProductsHeader({ canGoBack, onBack, onCreate }: ProductsHeaderPr
 
       <HStack>
         {canGoBack && (
-          <Button type="button" onClick={onBack}>
+          <Button onClick={onBack} type="button">
             <ArrowLeft />
             Voltar
           </Button>
         )}
         <Button
+          alignSelf={{ base: "stretch", md: "center" }}
           colorPalette="blue"
           display="inline-flex"
           gap={2}
-          alignSelf={{ base: "stretch", md: "center" }}
           onClick={onCreate}
         >
           <Plus size={18} />

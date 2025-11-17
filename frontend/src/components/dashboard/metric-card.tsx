@@ -7,13 +7,17 @@ type MetricCardProps = {
 
 export function MetricCard({ label, value }: MetricCardProps) {
   return (
-    <Box borderWidth="1px" borderRadius="lg" p={6} bg="bg.panel">
-      <Text fontSize="sm" color="fg.muted">
+    <Box bg="bg.panel" borderRadius="lg" borderWidth="1px" p={6}>
+      <Text color="fg.muted" fontSize="sm">
         {label}
       </Text>
       <LocaleProvider locale="pt-BR">
         <Text fontSize="2xl" fontWeight="semibold" mt={2}>
-          {typeof value === "number" ? (<FormatNumber value={value} style="decimal" />) : value}
+          {typeof value === "number" ? (
+            <FormatNumber style="decimal" value={value} />
+          ) : (
+            value
+          )}
         </Text>
       </LocaleProvider>
     </Box>

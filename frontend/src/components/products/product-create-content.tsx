@@ -29,41 +29,48 @@ export function ProductCreateContent({
   isSubmitting,
 }: ProductCreateContentProps) {
   return (
-    <Container maxW="4xl" py={10} px={{ base: 4, md: 6 }}>
+    <Container maxW="4xl" px={{ base: 4, md: 6 }} py={10}>
       <Stack gap={8}>
         <Stack gap={2}>
-          <Text fontSize="xs" fontWeight="semibold" color="fg.muted" textTransform="uppercase">
+          <Text
+            color="fg.muted"
+            fontSize="xs"
+            fontWeight="semibold"
+            textTransform="uppercase"
+          >
             Produtos
           </Text>
           <Text as="h1" fontSize="2xl" fontWeight="bold">
             Cadastrar produto
           </Text>
-          <Text color="fg.muted">Preencha os dados para inserir um novo produto no estoque.</Text>
+          <Text color="fg.muted">
+            Preencha os dados para inserir um novo produto no estoque.
+          </Text>
         </Stack>
 
         <Box
           as="form"
-          borderWidth="1px"
-          borderRadius="lg"
           bg="bg.surface"
-          p={{ base: 6, md: 8 }}
+          borderRadius="lg"
+          borderWidth="1px"
           onSubmit={onSubmit}
+          p={{ base: 6, md: 8 }}
         >
           <Stack gap={6}>
-            <Field.Root required invalid={Boolean(errors.name)}>
+            <Field.Root invalid={Boolean(errors.name)} required>
               <Field.Label>
                 Nome
                 <Field.RequiredIndicator />
               </Field.Label>
               <Input
-                placeholder="Ex.: Notebook Pro 14"
                 autoFocus
+                placeholder="Ex.: Notebook Pro 14"
                 {...register("name", { required: "Informe o nome do produto" })}
               />
               <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root required invalid={Boolean(errors.category)}>
+            <Field.Root invalid={Boolean(errors.category)} required>
               <Field.Label>
                 Categoria
                 <Field.RequiredIndicator />
@@ -75,7 +82,7 @@ export function ProductCreateContent({
               <Field.ErrorText>{errors.category?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root required invalid={Boolean(errors.unit)}>
+            <Field.Root invalid={Boolean(errors.unit)} required>
               <Field.Label>
                 Unidade
                 <Field.RequiredIndicator />
@@ -88,15 +95,15 @@ export function ProductCreateContent({
             </Field.Root>
 
             <Flex direction={{ base: "column", md: "row" }} gap={6}>
-              <Field.Root required invalid={Boolean(errors.unitPrice)}>
+              <Field.Root invalid={Boolean(errors.unitPrice)} required>
                 <Field.Label>
                   Preço (R$)
                   <Field.RequiredIndicator />
                 </Field.Label>
                 <Input
-                  type="number"
-                  step="0.01"
                   min="0"
+                  step="0.01"
+                  type="number"
                   {...register("unitPrice", {
                     valueAsNumber: true,
                     min: {
@@ -109,15 +116,15 @@ export function ProductCreateContent({
                 <Field.ErrorText>{errors.unitPrice?.message}</Field.ErrorText>
               </Field.Root>
 
-              <Field.Root required invalid={Boolean(errors.quantity)}>
+              <Field.Root invalid={Boolean(errors.quantity)} required>
                 <Field.Label>
                   Quantidade
                   <Field.RequiredIndicator />
                 </Field.Label>
                 <Input
-                  type="number"
                   min="0"
                   step="1"
+                  type="number"
                   {...register("quantity", {
                     valueAsNumber: true,
                     min: {
@@ -131,17 +138,17 @@ export function ProductCreateContent({
               </Field.Root>
             </Flex>
 
-            <Flex justify="flex-end" gap={3}>
+            <Flex gap={3} justify="flex-end">
               {canGoBack && (
-                <Button type="button" variant="ghost" onClick={onBack}>
+                <Button onClick={onBack} type="button" variant="ghost">
                   Cancelar
                 </Button>
               )}
               <Button
-                type="submit"
                 colorPalette="blue"
                 loading={isSubmitting}
                 loadingText="Salvando..."
+                type="submit"
               >
                 Salvar produto
               </Button>

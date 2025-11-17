@@ -27,15 +27,19 @@ export function ProductsListContent({
   pageSize,
 }: ProductsListContentProps) {
   return (
-    <Container maxW="6xl" py={10} px={{ base: 4, md: 6 }}>
+    <Container maxW="6xl" px={{ base: 4, md: 6 }} py={10}>
       <Stack gap={8}>
-        <ProductsHeader canGoBack={canGoBack} onBack={onBack} onCreate={onCreate} />
+        <ProductsHeader
+          canGoBack={canGoBack}
+          onBack={onBack}
+          onCreate={onCreate}
+        />
         <ProductsTable
-          items={items}
-          onViewDetails={onViewDetails}
-          onDelete={onDelete}
           deletingId={deletingId}
           isDeleting={isDeleting}
+          items={items}
+          onDelete={onDelete}
+          onViewDetails={onViewDetails}
           pageSize={pageSize}
         />
       </Stack>

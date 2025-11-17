@@ -4,10 +4,12 @@ interface ProductDetailInvalidProps {
   onBackToList: () => void
 }
 
-export function ProductDetailInvalid({ onBackToList }: ProductDetailInvalidProps) {
+export function ProductDetailInvalid({
+  onBackToList,
+}: ProductDetailInvalidProps) {
   return (
-    <Container maxW="3xl" py={10} px={{ base: 4, md: 6 }}>
-      <Stack gap={4} align="center" textAlign="center">
+    <Container maxW="3xl" px={{ base: 4, md: 6 }} py={10}>
+      <Stack align="center" gap={4} textAlign="center">
         <Text as="h1" fontSize="2xl" fontWeight="bold">
           Produto inválido
         </Text>

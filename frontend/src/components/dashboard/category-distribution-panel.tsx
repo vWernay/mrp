@@ -1,12 +1,14 @@
-import type { Item } from "@/lib/api"
-import { CategoryDistributionBarChart } from "@/components/charts/category-distribution-bar-chart"
 import { Box, Heading, Text } from "@chakra-ui/react"
+import { CategoryDistributionBarChart } from "@/components/charts/category-distribution-bar-chart"
+import type { Item } from "@/lib/api"
 
 interface CategoryDistributionPanelProps {
   items: Item[]
 }
 
-export function CategoryDistributionPanel({ items }: CategoryDistributionPanelProps) {
+export function CategoryDistributionPanel({
+  items,
+}: CategoryDistributionPanelProps) {
   const categoryTotals = items.reduce<Record<string, number>>((acc, item) => {
     acc[item.category] = (acc[item.category] ?? 0) + item.quantity
     return acc
@@ -17,7 +19,7 @@ export function CategoryDistributionPanel({ items }: CategoryDistributionPanelPr
     .sort((a, b) => b.value - a.value)
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" p={6} bg="bg.panel">
+    <Box bg="bg.panel" borderRadius="lg" borderWidth="1px" p={6}>
       <Heading size="md">Distribuicao por categoria</Heading>
       <Text color="fg.muted" mt={2}>
         Quantidade total de itens em cada categoria

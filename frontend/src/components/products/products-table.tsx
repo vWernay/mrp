@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react"
 import {
   Badge,
   Button,
@@ -12,9 +11,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
-import type { Item } from "@/lib/api"
 import { Eye, Trash2 } from "lucide-react"
+import { useMemo, useState } from "react"
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu"
+import type { Item } from "@/lib/api"
 
 interface ProductsTableProps {
   items: Item[]
@@ -48,7 +48,7 @@ export function ProductsTable({
 
   return (
     <>
-      <Table.Root size="lg" variant="outline" rounded="lg" interactive>
+      <Table.Root interactive rounded="lg" size="lg" variant="outline">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader>Nome</Table.ColumnHeader>
@@ -62,7 +62,9 @@ export function ProductsTable({
           {visibleItems.length === 0 ? (
             <Table.Row>
               <Table.Cell colSpan={5} textAlign="center">
-                <Text color="fg.muted">Nenhum produto cadastrado até o momento.</Text>
+                <Text color="fg.muted">
+                  Nenhum produto cadastrado até o momento.
+                </Text>
               </Table.Cell>
             </Table.Row>
           ) : (
@@ -71,7 +73,7 @@ export function ProductsTable({
                 <Table.Cell>
                   <VStack align="start" gap={1}>
                     <Text fontWeight="semibold">{product.name}</Text>
-                    <Text fontSize="xs" color="fg.muted">
+                    <Text color="fg.muted" fontSize="xs">
                       ID: {product.id}
                     </Text>
                   </VStack>
@@ -79,44 +81,50 @@ export function ProductsTable({
                 <Table.Cell>{product.category}</Table.Cell>
                 <Table.Cell>
                   <LocaleProvider locale="pt-BR">
-                    <FormatNumber value={product.unitPrice} style="currency" currency="BRL" />
+                    <FormatNumber
+                      currency="BRL"
+                      style="currency"
+                      value={product.unitPrice}
+                    />
                   </LocaleProvider>
                 </Table.Cell>
                 <Table.Cell>
-                  <Flex justify="flex-end" align="center" gap={3}>
+                  <Flex align="center" gap={3} justify="flex-end">
                     <Text>
                       {product.quantity.toLocaleString("pt-BR")} {product.unit}
                     </Text>
                     {product.lowStock && (
-                      <Badge variant="solid" colorPalette="orange">
+                      <Badge colorPalette="orange" variant="solid">
                         Baixo estoque
                       </Badge>
                     )}
                   </Flex>
                 </Table.Cell>
                 <Table.Cell textAlign="end">
-                  <Flex justify="flex-end" gap={2}>
+                  <Flex gap={2} justify="flex-end">
                     <Button
-                      size="sm"
-                      variant="outline"
                       display="inline-flex"
                       gap={2}
                       onClick={() => onViewDetails(product.id)}
+                      size="sm"
+                      variant="outline"
                     >
                       <Eye size={16} />
                       Ver detalhes
                     </Button>
                     <Button
-                      size="sm"
-                      variant="ghost"
                       colorPalette="red"
+                      disabled={deletingId === product.id && isDeleting}
                       display="inline-flex"
                       gap={2}
                       onClick={() => onDelete(product.id)}
-                      disabled={deletingId === product.id && isDeleting}
+                      size="sm"
+                      variant="ghost"
                     >
                       <Trash2 size={16} />
-                      {deletingId === product.id && isDeleting ? "Excluindo..." : "Excluir"}
+                      {deletingId === product.id && isDeleting
+                        ? "Excluindo..."
+                        : "Excluir"}
                     </Button>
                   </Flex>
                 </Table.Cell>
@@ -129,11 +137,11 @@ export function ProductsTable({
       {count > pageSize && (
         <Pagination.Root
           count={count}
-          pageSize={pageSize}
-          page={currentPage}
           onPageChange={(event) => setPage(event.page)}
+          page={currentPage}
+          pageSize={pageSize}
         >
-          <ButtonGroup variant="ghost" size="sm" wrap="wrap">
+          <ButtonGroup size="sm" variant="ghost" wrap="wrap">
             <Pagination.PrevTrigger asChild>
               <IconButton>
                 <LuChevronLeft />
@@ -142,7 +150,10 @@ export function ProductsTable({
 
             <Pagination.Items
               render={(paginationPage) => (
-                <IconButton key={paginationPage.value} variant={{ base: "ghost", _selected: "outline" }}>
+                <IconButton
+                  key={paginationPage.value}
+                  variant={{ base: "ghost", _selected: "outline" }}
+                >
                   {paginationPage.value}
                 </IconButton>
               )}

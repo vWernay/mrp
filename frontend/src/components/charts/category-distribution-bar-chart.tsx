@@ -1,6 +1,14 @@
 import { Chart, useChart } from "@chakra-ui/charts"
 import { Text } from "@chakra-ui/react"
-import { Bar, BarChart, CartesianGrid, LabelList, Tooltip, XAxis, YAxis } from "recharts"
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts"
 
 export type CategoryDistributionDatum = {
   label: string
@@ -12,10 +20,12 @@ interface CategoryDistributionBarChartProps {
 }
 
 const numberFormatter = new Intl.NumberFormat("pt-BR", {
-  style: "decimal"
+  style: "decimal",
 })
 
-export function CategoryDistributionBarChart({ data }: CategoryDistributionBarChartProps) {
+export function CategoryDistributionBarChart({
+  data,
+}: CategoryDistributionBarChartProps) {
   if (data.length === 0) {
     return <Text color="fg.muted">Nenhum dado de categoria disponível.</Text>
   }
@@ -32,19 +42,32 @@ export function CategoryDistributionBarChart({ data }: CategoryDistributionBarCh
     <Chart.Root chart={chart} maxH="sm">
       <BarChart data={chart.data}>
         <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
-        <XAxis axisLine={false} tickLine={false} dataKey={chart.key("category")} />
-        <YAxis axisLine={false} tickLine={false} allowDecimals={false} tickFormatter={(value) => numberFormatter.format(value)} />
+        <XAxis
+          axisLine={false}
+          dataKey={chart.key("category")}
+          tickLine={false}
+        />
+        <YAxis
+          allowDecimals={false}
+          axisLine={false}
+          tickFormatter={(value) => numberFormatter.format(value)}
+          tickLine={false}
+        />
         <Tooltip
-          cursor={{ fill: chart.color("bg.muted") }}
           animationDuration={120}
-          content={<Chart.Tooltip formatter={(value) => numberFormatter.format(value)} />}
+          content={
+            <Chart.Tooltip
+              formatter={(value) => numberFormatter.format(value)}
+            />
+          }
+          cursor={{ fill: chart.color("bg.muted") }}
         />
         {chart.series.map((item) => (
           <Bar
-            key={item.name}
-            isAnimationActive={false}
             dataKey={chart.key(item.name)}
             fill={chart.color(item.color)}
+            isAnimationActive={false}
+            key={item.name}
           >
             <LabelList
               dataKey={chart.key(item.name)}
