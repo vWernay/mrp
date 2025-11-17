@@ -7,6 +7,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { DashboardLoading } from "@/components/dashboard/dashboard-loading"
 import { LowStockPanel } from "@/components/dashboard/low-stock-panel"
 import { MetricsGrid } from "@/components/dashboard/metrics-grid"
+import { InventoryEvolutionPanel } from "@/components/dashboard/inventory-evolution-panel"
 import { getItems } from "@/lib/api"
 
 export const Route = createFileRoute("/")({
@@ -45,6 +46,8 @@ function DashboardRoute() {
           <LowStockPanel items={items} />
           <CategoryDistributionPanel items={items} />
         </SimpleGrid>
+
+        <InventoryEvolutionPanel />
       </Stack>
     </Container>
   )

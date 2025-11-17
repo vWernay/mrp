@@ -180,3 +180,25 @@ export async function getMovements(
   const data = await request<MovementDTO[]>(`/movements?${params.toString()}`)
   return data.map(mapMovement)
 }
+
+export type InventoryPointDTO = {
+  timestamp: string
+  total_value: number
+}
+
+export type InventoryPoint = {
+  timestamp: string
+  totalValue: number
+}
+
+function mapInventoryPoint(dto: InventoryPointDTO): InventoryPoint {
+  return {
+    timestamp: dto.timestamp,
+    totalValue: dto.total_value,
+  }
+}
+
+export async function getInventoryTotalSeries(): Promise<InventoryPoint[]> {
+  const data = await request<InventoryPointDTO[]>(`/dashboard/total`)
+  return data.map(mapInventoryPoint)
+}
