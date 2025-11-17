@@ -15,8 +15,8 @@ interface ProductDetailContentProps {
   product: Item
   onBack: () => void
   onDelete: () => void
-  onRequestStockMovement: () => void
   isDeleting: boolean
+  movementUI?: React.ReactNode
 }
 
 const currencyFormatter = new Intl.NumberFormat("pt-BR", {
@@ -28,8 +28,8 @@ export function ProductDetailContent({
   product,
   onBack,
   onDelete,
-  onRequestStockMovement,
   isDeleting,
+  movementUI,
 }: ProductDetailContentProps) {
   const totalValue = product.unitPrice * product.quantity
 
@@ -103,14 +103,21 @@ export function ProductDetailContent({
           </SimpleGrid>
         </Box>
 
-        <Flex
-          direction={{ base: "column", md: "row" }}
-          gap={3}
-          justify="flex-end"
-        >
-          <Button onClick={onRequestStockMovement} variant="outline">
-            Movimentar estoque
-          </Button>
+        {movementUI && (
+          <Box
+            bg="bg.surface"
+            borderRadius="lg"
+            borderWidth="1px"
+            p={{ base: 6, md: 8 }}
+          >
+            <Text as="h2" fontSize="lg" fontWeight="bold" mb={4}>
+              Movimentações de estoque
+            </Text>
+            {movementUI}
+          </Box>
+        )}
+
+        <Flex direction={{ base: "column", md: "row" }} gap={3} justify="flex-end">
           <Button
             colorPalette="red"
             display="inline-flex"

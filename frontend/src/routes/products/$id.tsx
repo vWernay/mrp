@@ -5,7 +5,16 @@ import { ProductDetailError } from "@/components/products/product-detail-error"
 import { ProductDetailInvalid } from "@/components/products/product-detail-invalid"
 import { ProductDetailLoading } from "@/components/products/product-detail-loading"
 import { toaster } from "@/components/ui/toaster"
-import { deleteItem, getItem } from "@/lib/api"
+import {
+  createMovement,
+  deleteItem,
+  getItem,
+  getMovements,
+  type CreateMovementInput,
+} from "@/lib/api"
+import { StockMovementForm } from "@/components/products/stock-movement-form"
+import { MovementsList } from "@/components/products/movements-list"
+import { HStack, Separator, Text } from "@chakra-ui/react"
 
 export const Route = createFileRoute("/products/$id")({
   component: ProductDetailRoute,
@@ -30,6 +39,16 @@ function ProductDetailRoute() {
     retry: false,
   })
 
+  const {
+    data: movements = [],
+    refetch: refetchMovements,
+    isPending: isMovementsPending,
+  } = useQuery({
+    queryKey: ["movements", itemId],
+    queryFn: () => getMovements(itemId, 20),
+    enabled: Number.isInteger(itemId) && !Number.isNaN(itemId),
+  })
+
   const deleteMutation = useMutation({
     mutationFn: deleteItem,
     onSuccess: () => {
@@ -51,6 +70,36 @@ function ProductDetailRoute() {
           mutationError instanceof Error
             ? mutationError.message
             : "Tente novamente em breve.",
+        type: "error",
+        duration: 4000,
+        closable: true,
+      })
+    },
+  })
+
+  const movementMutation = useMutation({
+    mutationFn: (payload: CreateMovementInput) => createMovement(payload),
+    onSuccess: () => {
+      toaster.create({
+        title: "Movimentação registrada",
+        description: "O estoque foi atualizado.",
+        type: "success",
+        duration: 3000,
+        closable: true,
+      })
+      queryClient.invalidateQueries({ queryKey: ["items"] })
+      queryClient.invalidateQueries({ queryKey: ["item", itemId] })
+      queryClient.invalidateQueries({ queryKey: ["movements", itemId] })
+      refetch()
+      refetchMovements()
+    },
+    onError: (mutationError: unknown) => {
+      toaster.create({
+        title: "Não foi possível movimentar",
+        description:
+          mutationError instanceof Error
+            ? mutationError.message
+            : "Tente novamente em instantes.",
         type: "error",
         duration: 4000,
         closable: true,
@@ -83,18 +132,35 @@ function ProductDetailRoute() {
   return (
     <ProductDetailContent
       isDeleting={deleteMutation.isPending}
+      movementUI={
+        product ? (
+          <>
+            <StockMovementForm
+              defaultUnitPrice={product.unitPrice}
+              isSubmitting={movementMutation.isPending}
+              unit={product.unit}
+              onSubmit={(values) =>
+                movementMutation.mutate({
+                  itemId: product.id,
+                  ...values,
+                })
+              }
+            />
+            <HStack my={6}>
+              <Separator flex="1" />
+              <Text flexShrink="0" color="fg.muted">Movimentações</Text>
+              <Separator flex="1" />
+            </HStack>
+            <MovementsList
+              isLoading={isMovementsPending}
+              movements={movements}
+              unit={product.unit}
+            />
+          </>
+        ) : null
+      }
       onBack={() => navigate({ to: "/products" })}
       onDelete={() => deleteMutation.mutate(product.id)}
-      onRequestStockMovement={() =>
-        toaster.create({
-          title: "Recurso em planejamento",
-          description:
-            "Movimentação de estoque será implementada em uma próxima etapa.",
-          type: "info",
-          duration: 3000,
-          closable: true,
-        })
-      }
       product={product}
     />
   )
