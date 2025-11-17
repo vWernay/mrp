@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv
+venv/
+ENV/
+
+# SQLite
+*.db
+*.sqlite3
+
+# FastAPI / Uvicorn
+*.log
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+
+# Migrations (se usar Alembic e não quiser versionar gerado)
+alembic/__pycache__/
+alembic/versions/*.pyc
+# Se quiser ignorar versões geradas, mas só se você tiver certeza:
+# alembic/versions/
+
+# Docker
+*.pid
+*.sock
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
