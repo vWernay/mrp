@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Generator, Iterable, List, Optional
 
 DB_PATH = Path(__file__).resolve().parent.parent / "inventory.db"
-DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 
 
 @contextmanager
@@ -59,7 +59,7 @@ def calculate_total_inventory(conn: sqlite3.Connection) -> float:
         quantity = row["quantity"] or 0.0
         unit_price = row["unit_price"] or 0.0
         total += quantity * unit_price
-    return total
+    return round(total, 2)
 
 
 def fetch_item(conn: sqlite3.Connection, item_id: int) -> Optional[sqlite3.Row]:
@@ -143,6 +143,9 @@ def insert_movement(
     total_value_after: float,
 ) -> int:
     cursor = conn.cursor()
+    # Normalize monetary values
+    unit_price = round(unit_price, 4)
+    total_value_after = round(total_value_after, 2)
     cursor.execute(
         """
         INSERT INTO movements (

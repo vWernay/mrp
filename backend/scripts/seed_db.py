@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List
 
 from faker import Faker
@@ -111,9 +111,13 @@ def seed_database(*, force: bool = False, item_count: int = 5, seed: int | None 
             clear_tables(conn)
 
         seed_items = generate_items(faker, item_count)
-        for payload in seed_items:
+        # Base timestamp so data remains reproducible with --seed
+        base_time = datetime.utcnow()
+        for idx, payload in enumerate(seed_items):
             item_id = insert_item(conn, **payload)
-            timestamp = datetime.utcnow().strftime(DATETIME_FORMAT)
+            # Spread timestamps by seconds (can adjust granularity if needed)
+            timestamp_dt = base_time + timedelta(seconds=idx)
+            timestamp = timestamp_dt.strftime(DATETIME_FORMAT)
             total_after = calculate_total_inventory(conn)
             insert_movement(
                 conn,
