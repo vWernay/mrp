@@ -1,12 +1,12 @@
 import { Flex, Text } from "@chakra-ui/react"
 import { useColorModeValue } from "@/components/ui/color-mode"
 
-export default function Footer() {
-  const startYear = 2019
+export function Footer() {
+  const startYear = 2025
   const currentYear = new Date().getFullYear()
   const copyrightDate =
     startYear + (currentYear > startYear ? `-${currentYear}` : "")
-  const copyrightName = "MRP UDF"
+  const copyrightName = "Car Garage - UDF"
 
   return (
     <Flex
@@ -14,16 +14,13 @@ export default function Footer() {
       as="footer"
       borderTop="1px solid"
       borderTopColor={useColorModeValue("gray.200", "gray.700")}
-      bottom={0}
       flexDirection={{ base: "column", md: "row" }}
       gap={{ base: 4, md: 0 }}
       justifyContent={{ base: "center", md: "space-between" }}
       mx="auto"
       paddingX={{ base: 4, md: 10 }}
       paddingY={6}
-      pos={"absolute"}
       w="full"
-      zIndex="docked"
     >
       <Text
         color={useColorModeValue("gray.800", "gray.300")}

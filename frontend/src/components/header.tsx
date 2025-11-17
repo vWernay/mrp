@@ -11,7 +11,7 @@ import { Link } from "@tanstack/react-router"
 import logo_512x512 from "@/../public/logo_512x512.webp"
 import { ColorModeButton, useColorModeValue } from "@/components/ui/color-mode"
 
-export default function Header() {
+export function Header() {
   return (
     <Flex
       alignItems="center"
