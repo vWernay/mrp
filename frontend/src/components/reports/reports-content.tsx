@@ -3,6 +3,7 @@ import type { Item } from "@/lib/api"
 import { CostByCategoryPanel } from "./cost-by-category-panel"
 import { ProductsByCategoryPanel } from "./products-by-category-panel"
 import { TopProductsPanel } from "./top-products-panel"
+import { ABCPanel } from "./abc-panel"
 
 interface ReportsContentProps {
   items: Item[]
@@ -17,6 +18,8 @@ export function ReportsContent({ items }: ReportsContentProps) {
       </SimpleGrid>
 
       <TopProductsPanel items={items} />
+
+      <ABCPanel items={items} />
     </>
   )
 }
