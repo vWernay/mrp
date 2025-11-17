@@ -8,8 +8,8 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { Link } from "@tanstack/react-router"
-import logo_512x512 from "@/../public/logo_512x512.webp"
 import { ColorModeButton, useColorModeValue } from "@/components/ui/color-mode"
+import logo_512x512 from "/logo_512x512.webp"
 
 export function Header() {
   return (
