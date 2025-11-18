@@ -38,6 +38,24 @@ A documentação interativa pode ser acessada em `http://127.0.0.1:8000/docs` ou
 - `POST /movements` – registra entrada ou saída
 - `GET /dashboard/total` – série histórica do valor total
 
+## Menu interativo (CLI)
+
+Para simplificar, há um script de console que permite cadastrar, excluir (por ID ou nome), listar e sair.
+
+Executar o menu:
+
+```pwsh
+cd backend
+python -m scripts.menu_cli
+```
+
+Opções:
+
+- Cadastrar produto – informa nome, categoria, unidade, preço e quantidade inicial. Cria o item e registra o movimento inicial (init).
+- Excluir produto – por ID ou pelo nome (se houver mais de um com o mesmo nome, o menu solicitará a seleção).
+- Listar produtos – lista nome, categoria, preço, quantidade, total e destaca “BAIXO ESTOQUE” quando quantidade < 5.
+- Sair – encerra a execução.
+
 ## Popular o banco com dados de exemplo
 
 Use o script de seed (com Faker) para inserir alguns produtos aleatórios:
